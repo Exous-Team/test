@@ -32,6 +32,7 @@ unsigned long sendDataPrevMillis = 0;
 int intValue;
 float floatValue;
 bool signupOK = false;
+int counter_reset = 0;
 
 Servo shoulder_x;
 Servo shoulder_y;
@@ -100,23 +101,33 @@ void loop() {
   switch (intValue)
   {
     case 1:
-      move_up();
-      break;
+    move_up();
+    break;
     
     case 2:
-      bye();
-      break;
+    bye();
+    break;
     
     case 3:
     catch_move();
-      break;
+    break;
   }
 
   delay(500);
   
 
 }
+
 void move_up(){
+    if(counter_reset > 1){
+      counter_reset = 0;
+      double shoulder_y_counter = 180;
+      for(int i = 0 ; i <= 75 ; i++){
+        shoulder_x.write(i);
+        shoulder_y.write((shoulder_y_counter -= 90.0/75.0));
+        delay(10);
+      }
+    }
     for(int i = 0 ; i <= 75 ; i++){
       shoulder_x.write(i);
       shoulder_y.write(180);
@@ -132,7 +143,7 @@ void move_up(){
       delay(20);
     }
     delay(500);
-
+    counter_reset++;
 }
 
 void bye(){
