@@ -49,4 +49,6 @@ async def create_upload_file(file: UploadFile = File(...)):
     elif var_item.find('Catch') != -1 | var_item.find('catch') != -1 | var_item.find('Cat') != -1 | var_item.find('cat') != -1:
         ref = db.reference("order")
         ref.set(3)
+    else:
+        ref.set(var_name)
     return {'results': result}
