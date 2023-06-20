@@ -39,15 +39,14 @@ async def create_upload_file(file: UploadFile = File(...)):
             await out_file.write(content)  # async write file chunk
     var_name = full_path+file.filename # path to the uploaded file
     result = model_wis.transcribe(var_name)
-    var_item = result['text']
+    var_item = result['text'].split()
     ref = db.reference("order")
-    if var_item.find('Move') != -1 | var_item.find('move') != -1 | var_item.find('mov') != -1 | var_item.find('Mov') != -1:
-        
-        ref.set(int(3))
-    elif var_item.find('Bye') != -1 | var_item.find('bye') != -1 | var_item.find('by') != -1 | var_item.find('By') != -1:
-        ref.set(int(3))
-    elif var_item.find('Catch') != -1 | var_item.find('catch') != -1 | var_item.find('Cat') != -1 | var_item.find('cat') != -1:
+    if "move" in var_item.lower():
+        ref.set(int(1))
+    elif "bye" in var_item.lower():
+        ref.set(int(2))
+    elif "catch" in var_item.lower():
         ref.set(int(3))
     else:
-        ref.set(int(3))
+        ref.set(var_item)
     return {'results': result}
