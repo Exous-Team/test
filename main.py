@@ -7,7 +7,7 @@ import whisper
 import firebase_admin
 from firebase_admin import credentials, db
 
-model_wis = whisper.load_model("base")
+model_wis = whisper.load_model("tiny")
 
 absolute_path = os.path.dirname(__file__)
 static_dir = os.path.join(os.path.dirname(__file__))
